@@ -1,0 +1,81 @@
+{
+	"name": "imdb_movies",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "datameshDB",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "imdb_movies_adls.csv",
+				"container": "movies"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "title",
+				"type": "String"
+			},
+			{
+				"name": "original_title",
+				"type": "String"
+			},
+			{
+				"name": "year",
+				"type": "String"
+			},
+			{
+				"name": "release_date",
+				"type": "String"
+			},
+			{
+				"name": "rating",
+				"type": "String"
+			},
+			{
+				"name": "votes_number",
+				"type": "String"
+			},
+			{
+				"name": "runtime",
+				"type": "String"
+			},
+			{
+				"name": "certificate",
+				"type": "String"
+			},
+			{
+				"name": "countries",
+				"type": "String"
+			},
+			{
+				"name": "genres",
+				"type": "String"
+			},
+			{
+				"name": "plot",
+				"type": "String"
+			},
+			{
+				"name": "director",
+				"type": "String"
+			},
+			{
+				"name": "cast",
+				"type": "String"
+			},
+			{
+				"name": "title_id",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

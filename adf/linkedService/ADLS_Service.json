@@ -1,0 +1,14 @@
+{
+	"name": "ADLS_Service",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureDataLakeStore",
+		"typeProperties": {
+			"dataLakeStoreUri": "https://adlsdatamesh01.azuredatalakestore.net/webhdfs/v1",
+			"tenant": "6fecd065-cb31-41b4-985c-60f2fdf1720f",
+			"subscriptionId": "522fb493-ffab-4a5c-b72d-fe645a4d1e41",
+			"resourceGroupName": "PosteDataMeshPOC"
+		}
+	}
+}
