@@ -1,0 +1,33 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "PosteDataMeshDF"
+		},
+		"ADLS_Service_properties_typeProperties_dataLakeStoreUri": {
+			"value": "https://adlsdatamesh01.azuredatalakestore.net/webhdfs/v1"
+		},
+		"ADLS_Service_properties_typeProperties_tenant": {
+			"value": "6fecd065-cb31-41b4-985c-60f2fdf1720f"
+		},
+		"ADLS_Service_properties_typeProperties_subscriptionId": {
+			"value": "522fb493-ffab-4a5c-b72d-fe645a4d1e41"
+		},
+		"ADLS_Service_properties_typeProperties_resourceGroupName": {
+			"value": "PosteDataMeshPOC"
+		},
+		"PosteDataMeshVaultService_properties_typeProperties_baseUrl": {
+			"value": "https://PosteDataMeshVault.vault.azure.net/"
+		},
+		"datameshDB_properties_typeProperties_connectionString_secretName": {
+			"value": "connectionstring"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}

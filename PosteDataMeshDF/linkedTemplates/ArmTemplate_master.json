@@ -1,0 +1,84 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "PosteDataMeshDF"
+		},
+		"ADLS_Service_properties_typeProperties_dataLakeStoreUri": {
+			"type": "string",
+			"defaultValue": "https://adlsdatamesh01.azuredatalakestore.net/webhdfs/v1"
+		},
+		"ADLS_Service_properties_typeProperties_tenant": {
+			"type": "string",
+			"defaultValue": "6fecd065-cb31-41b4-985c-60f2fdf1720f"
+		},
+		"ADLS_Service_properties_typeProperties_subscriptionId": {
+			"type": "string",
+			"defaultValue": "522fb493-ffab-4a5c-b72d-fe645a4d1e41"
+		},
+		"ADLS_Service_properties_typeProperties_resourceGroupName": {
+			"type": "string",
+			"defaultValue": "PosteDataMeshPOC"
+		},
+		"PosteDataMeshVaultService_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://PosteDataMeshVault.vault.azure.net/"
+		},
+		"datameshDB_properties_typeProperties_connectionString_secretName": {
+			"type": "string",
+			"defaultValue": "connectionstring"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"ADLS_Service_properties_typeProperties_dataLakeStoreUri": {
+						"value": "[parameters('ADLS_Service_properties_typeProperties_dataLakeStoreUri')]"
+					},
+					"ADLS_Service_properties_typeProperties_tenant": {
+						"value": "[parameters('ADLS_Service_properties_typeProperties_tenant')]"
+					},
+					"ADLS_Service_properties_typeProperties_subscriptionId": {
+						"value": "[parameters('ADLS_Service_properties_typeProperties_subscriptionId')]"
+					},
+					"ADLS_Service_properties_typeProperties_resourceGroupName": {
+						"value": "[parameters('ADLS_Service_properties_typeProperties_resourceGroupName')]"
+					},
+					"PosteDataMeshVaultService_properties_typeProperties_baseUrl": {
+						"value": "[parameters('PosteDataMeshVaultService_properties_typeProperties_baseUrl')]"
+					},
+					"datameshDB_properties_typeProperties_connectionString_secretName": {
+						"value": "[parameters('datameshDB_properties_typeProperties_connectionString_secretName')]"
+					}
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}
