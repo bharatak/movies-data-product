@@ -46,7 +46,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "ADLS_Gen1_Movies",
+						"referenceName": "test_Movies",
 						"type": "DatasetReference"
 					}
 				]
