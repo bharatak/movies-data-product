@@ -1,4 +1,4 @@
-Node {
+node {
     stage('cloning') {
             git branch: 'adf_publish', url: 'https://github.com/bharatak/movie-product.git'
         }
