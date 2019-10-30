@@ -1,0 +1,11 @@
+Node {
+    stage('cloning') {
+            git branch: 'adf_publish', url: 'https://github.com/bharatak/movie-product.git'
+        }
+       
+        stage('Deploy to Azure') {
+            sh label: '', script: '''az group deployment create --resource-group PosteDataMeshPOC --template-file PosteDataMeshDF/ARMTemplateForFactory.json --parameters PosteDataMeshDF/ARMTemplateParametersForFactory.json
+            az group deployment create --resource-group PosteDataMeshPOC --template-file PosteDataMeshDF/linkedTemplates/ArmTemplate_0.json
+            az group deployment create --resource-group PosteDataMeshPOC --template-file PosteDataMeshDF/PartialArmTemplates/ArmTemplate_10_24_2019_16_23_12.json'''
+        }
+}
