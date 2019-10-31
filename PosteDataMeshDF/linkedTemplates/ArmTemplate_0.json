@@ -7,6 +7,10 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "PosteDataMeshDF"
 		},
+		"datameshDB_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'datameshDB'"
+		},
 		"ADLS_Service_properties_typeProperties_dataLakeStoreUri": {
 			"type": "string",
 			"defaultValue": "https://adlsdatamesh01.azuredatalakestore.net/webhdfs/v1"
@@ -26,10 +30,6 @@
 		"PosteDataMeshVaultService_properties_typeProperties_baseUrl": {
 			"type": "string",
 			"defaultValue": "https://PosteDataMeshVault.vault.azure.net/"
-		},
-		"datameshDB_properties_typeProperties_connectionString_secretName": {
-			"type": "string",
-			"defaultValue": "connectionstring"
 		}
 	},
 	"variables": {
@@ -66,7 +66,20 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/imdb_movie_data')]",
+			"name": "[concat(parameters('factoryName'), '/datameshDB')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('datameshDB_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ADLS_Gen1_Movies')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -92,28 +105,6 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/datameshDB')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBlobStorage",
-				"typeProperties": {
-					"connectionString": {
-						"type": "AzureKeyVaultSecret",
-						"store": {
-							"referenceName": "PosteDataMeshVaultService",
-							"type": "LinkedServiceReference"
-						},
-						"secretName": "[parameters('datameshDB_properties_typeProperties_connectionString_secretName')]"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/PosteDataMeshVaultService')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/copiedMovies')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -127,7 +118,7 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobStorageLocation",
-						"fileName": "imdb.csv",
+						"fileName": "imdb",
 						"container": "movies"
 					},
 					"columnDelimiter": ",",
@@ -139,6 +130,32 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/datameshDB')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/test_Movies')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ADLS_Service",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureDataLakeStoreLocation"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ADLS_Service')]"
 			]
 		},
 		{
@@ -192,7 +209,7 @@
 						],
 						"outputs": [
 							{
-								"referenceName": "imdb_movie_data",
+								"referenceName": "test_Movies",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
@@ -203,7 +220,7 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/copiedMovies')]",
-				"[concat(variables('factoryId'), '/datasets/imdb_movie_data')]"
+				"[concat(variables('factoryId'), '/datasets/test_Movies')]"
 			]
 		}
 	]

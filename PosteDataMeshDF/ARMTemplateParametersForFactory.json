@@ -5,6 +5,9 @@
 		"factoryName": {
 			"value": "PosteDataMeshDF"
 		},
+		"datameshDB_connectionString": {
+			"value": ""
+		},
 		"ADLS_Service_properties_typeProperties_dataLakeStoreUri": {
 			"value": "https://adlsdatamesh01.azuredatalakestore.net/webhdfs/v1"
 		},
@@ -19,9 +22,6 @@
 		},
 		"PosteDataMeshVaultService_properties_typeProperties_baseUrl": {
 			"value": "https://PosteDataMeshVault.vault.azure.net/"
-		},
-		"datameshDB_properties_typeProperties_connectionString_secretName": {
-			"value": "connectionstring"
 		}
 	}
 }

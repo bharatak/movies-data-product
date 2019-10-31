@@ -6,30 +6,6 @@
 			"type": "string",
 			"metadata": "Data Factory name",
 			"defaultValue": "PosteDataMeshDF"
-		},
-		"datameshDB_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'datameshDB'"
-		},
-		"ADLS_Service_properties_typeProperties_dataLakeStoreUri": {
-			"type": "string",
-			"defaultValue": "https://adlsdatamesh01.azuredatalakestore.net/webhdfs/v1"
-		},
-		"ADLS_Service_properties_typeProperties_tenant": {
-			"type": "string",
-			"defaultValue": "6fecd065-cb31-41b4-985c-60f2fdf1720f"
-		},
-		"ADLS_Service_properties_typeProperties_subscriptionId": {
-			"type": "string",
-			"defaultValue": "522fb493-ffab-4a5c-b72d-fe645a4d1e41"
-		},
-		"ADLS_Service_properties_typeProperties_resourceGroupName": {
-			"type": "string",
-			"defaultValue": "PosteDataMeshPOC"
-		},
-		"PosteDataMeshVaultService_properties_typeProperties_baseUrl": {
-			"type": "string",
-			"defaultValue": "https://PosteDataMeshVault.vault.azure.net/"
 		}
 	},
 	"variables": {
@@ -81,15 +57,13 @@
 						"inputs": [
 							{
 								"referenceName": "copiedMovies",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						],
 						"outputs": [
 							{
 								"referenceName": "test_Movies",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						]
 					}
@@ -123,9 +97,7 @@
 				},
 				"schema": []
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/ADLS_Service')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/copiedMovies')]",
@@ -151,9 +123,7 @@
 				},
 				"schema": []
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/datameshDB')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/test_Movies')]",
@@ -177,24 +147,6 @@
 				},
 				"schema": []
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/ADLS_Service')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ADLS_Service')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureDataLakeStore",
-				"typeProperties": {
-					"dataLakeStoreUri": "[parameters('ADLS_Service_properties_typeProperties_dataLakeStoreUri')]",
-					"tenant": "[parameters('ADLS_Service_properties_typeProperties_tenant')]",
-					"subscriptionId": "[parameters('ADLS_Service_properties_typeProperties_subscriptionId')]",
-					"resourceGroupName": "[parameters('ADLS_Service_properties_typeProperties_resourceGroupName')]"
-				}
-			},
 			"dependsOn": []
 		},
 		{
@@ -205,20 +157,7 @@
 				"annotations": [],
 				"type": "AzureKeyVault",
 				"typeProperties": {
-					"baseUrl": "[parameters('PosteDataMeshVaultService_properties_typeProperties_baseUrl')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/datameshDB')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBlobStorage",
-				"typeProperties": {
-					"connectionString": "[parameters('datameshDB_connectionString')]"
+					"baseUrl": "https://PosteDataMeshVault.vault.azure.net/"
 				}
 			},
 			"dependsOn": []
